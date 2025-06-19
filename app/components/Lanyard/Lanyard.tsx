@@ -34,13 +34,13 @@ interface LanyardProps {
 }
 
 export default function Lanyard({
-  position = [-15, 0, 30], 
+  position = [0, 0, 30],
   gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
 }: LanyardProps) {
   return (
-    <div className="relative z-0 w-full h-screen flex justify-start items-center transform scale-100 origin-center">
+    <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
       <Canvas
         camera={{ position, fov }}
         gl={{ alpha: transparent }}
@@ -204,7 +204,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
   return (
     <>
-      <group position={[-8, 4, 0]}>
+      <group position={[0, 4, 0]}>
         <RigidBody
           ref={fixed}
           {...segmentProps}

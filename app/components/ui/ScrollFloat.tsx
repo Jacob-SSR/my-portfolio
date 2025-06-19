@@ -44,27 +44,21 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
     const el = containerRef.current;
     if (!el) return;
 
-    // ตรวจสอบว่า scrollContainerRef มีอยู่จริงและ mounted แล้ว
     const scroller = scrollContainerRef?.current;
-    
-    // รอให้ DOM พร้อมก่อนสร้าง animation
+
     const timer = setTimeout(() => {
       const charElements = el.querySelectorAll(".inline-block");
-      
       if (charElements.length === 0) return;
 
-      // สร้าง ScrollTrigger configuration
-      const scrollTriggerConfig: any = {
+      const scrollTriggerConfig = {
         trigger: el,
         start: scrollStart,
         end: scrollEnd,
         scrub: true,
-        // เพิ่ม refreshPriority เพื่อให้ ScrollTrigger refresh หลังจาก DOM พร้อม
         refreshPriority: -1,
       };
 
-      // เพิ่ม scroller เฉพาะเมื่อมีอยู่จริงและ mounted แล้ว
-      if (scroller && scroller.parentElement) {
+      if (scroller) {
         scrollTriggerConfig.scroller = scroller;
       }
 
@@ -80,37 +74,27 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
         },
         {
           duration: animationDuration,
-          ease: ease,
+          ease,
           opacity: 1,
           yPercent: 0,
           scaleY: 1,
           scaleX: 1,
-          stagger: stagger,
+          stagger,
           scrollTrigger: scrollTriggerConfig,
         }
       );
 
-      // Cleanup function
       return () => {
         animation.kill();
-        ScrollTrigger.getAll().forEach(trigger => {
+        ScrollTrigger.getAll().forEach((trigger) => {
           if (trigger.trigger === el) {
             trigger.kill();
           }
         });
       };
-    }, 100); // รอ 100ms เพื่อให้ DOM พร้อม
+    }, 100);
 
-    // Cleanup timeout หาก component unmount ก่อนที่ timer จะทำงาน
-    return () => {
-      clearTimeout(timer);
-      // Kill all ScrollTriggers ที่เกี่ยวข้องกับ element นี้
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === el) {
-          trigger.kill();
-        }
-      });
-    };
+    return () => clearTimeout(timer);
   }, [
     scrollContainerRef,
     animationDuration,
@@ -120,17 +104,14 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
     stagger,
   ]);
 
-  // เพิ่ม effect สำหรับ refresh ScrollTrigger เมื่อ scrollContainerRef เปลี่ยน
   useEffect(() => {
-    if (scrollContainerRef?.current) {
-      // รอให้ scroller element พร้อมแล้วค่อย refresh
+    if (scrollContainerRef && scrollContainerRef.current) {
       const timer = setTimeout(() => {
         ScrollTrigger.refresh();
       }, 200);
-      
       return () => clearTimeout(timer);
     }
-  }, [scrollContainerRef?.current]);
+  }, [scrollContainerRef]);
 
   return (
     <h2
@@ -138,7 +119,7 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
       className={`my-5 overflow-hidden ${containerClassName}`}
     >
       <span
-        className={`inline-block text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] ${textClassName}`}
+        className={`inline-block text-[clamp(1.6rem,8vw,8rem)] leading-[1.5] ${textClassName}`}
       >
         {splitText}
       </span>

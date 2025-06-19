@@ -1,12 +1,15 @@
+"use client";
+
 import ScrollFloat from "@/app/components/ui/ScrollFloat";
 import Lanyard from "../components/Lanyard/Lanyard";
+import ScrollReveal from "../components/ui/ScrollReveal";
 
 const Aboutpage = () => {
   return (
     <>
       <section
         id="about"
-        className="min-h-screen flex items-center justify-center "
+        className="min-h-screen flex items-center justify-center"
       >
         <ScrollFloat
           animationDuration={1}
@@ -18,10 +21,60 @@ const Aboutpage = () => {
           ABOUT ME
         </ScrollFloat>
       </section>
-      <div >
-        <Lanyard position={[-15, 0, 20]} gravity={[0, -40, 0]} />
+
+      <div className="p-5">
+        {/* container หลัก flex */}
+        <div className="flex flex-col lg:flex-row lg:items-start gap-6 ">
+          {/* Lanyard */}
+          <div className="flex justify-center lg:justify-start lg:w-250">
+            {/* ปรับตำแหน่ง gravity/position ตามขนาด */}
+            <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
+          </div>
+
+          {/* ข้อความ */}
+          <div className="flex flex-1 justify-center items-center text-center text-2xl  p-6 max-w-xl lg:mt-50 mx-auto lg:mx-0">
+            <div className="flex flex-col space-y-6">
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={2}
+                blurStrength={50}
+              >
+                Hello, I'm Teepakorn Sangiamsak.
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={2}
+                blurStrength={50}
+              >
+                I recently completed a Full Stack Web Development course at
+                Software Park CodeCamp.
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={2}
+                blurStrength={50}
+              >
+                During my training and internships, I worked on projects and
+                learned to collaborate with teams to solve technical challenges.
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={2}
+                blurStrength={50}
+              >
+                My goal is to continue growing as a developer and contribute to
+                meaningful, user-focused applications.
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 };
+
 export default Aboutpage;
