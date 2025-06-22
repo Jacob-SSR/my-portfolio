@@ -2,13 +2,20 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="justify-items-center">
-      <div className="border rounded-3xl mt-4 p-4 ">
-        <div className="flex justify-between gap-8 px-4">
-          <Link href="#home">Home</Link>
-          <Link href="#about">About</Link>
-          <Link href="#projects">Projects</Link>
-          <Link href="#contact">Contact</Link>
+    <div className="w-full fixed left-0 z-50 flex justify-center px-4
+                    bottom-4 sm:top-4 sm:bottom-auto">
+      <div className="w-full max-w-[500px] rounded-3xl p-4 bg-white/10 backdrop-blur-md border border-white/20">
+        <div className="flex justify-between gap-4 sm:gap-8 text-white text-sm sm:text-lg">
+          {["Home", "About", "Projects", "Contact"].map((item) => (
+            <Link
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="relative group px-4 py-2 rounded-lg overflow-hidden"
+            >
+              <span className="relative z-10">{item}</span>
+              <span className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></span>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

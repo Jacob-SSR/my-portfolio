@@ -4,6 +4,7 @@ import TechStack from "@/app/components/TechStack";
 import Timeline from "@/app/components/Timeline";
 import Projectpage from "./projects/page";
 import Contactpage from "./contact/page";
+import TectStackpage from "./tectstack/page";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Hero />
       <Aboutpage />
       <TechStack />
+      <TectStackpage />
       <Timeline />
       <Projectpage />
       <Contactpage />
