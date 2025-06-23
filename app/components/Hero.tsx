@@ -2,7 +2,6 @@
 
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
-import SplitText from "./ui/SplitText";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
@@ -13,28 +12,26 @@ const handleAnimationComplete = () => {
 };
 
 const Hero = () => {
-  const [textColor, setTextColor] = useState("");
+  const [textColor, setTextColor] = useState("#FFF4A4");
 
   return (
     <div className="m-6 sm:m-10">
       <section className="flex flex-col lg:flex-row items-center justify-center flex-wrap gap-10 p-6">
         {/* Text Section */}
-        <div className="flex flex-col items-start w-full lg:w-2/3 max-w-4xl overflow-visible">
-          <SplitText
-            text="Hi, I'm Teepakorn Sangiamsak"
-            className="text-4xl md:text-5xl mb-4"
-            delay={100}
-            duration={0.6}
-            ease="power3.out"
-            splitType="chars"
-            from={{ opacity: 0, y: 40 }}
-            to={{ opacity: 1, y: 0 }}
-            threshold={0.1}
-            rootMargin="-100px"
-            textAlign="left"
-            onLetterAnimationComplete={handleAnimationComplete}
-          />
-          <div style={{ fontSize: "2em", color: textColor }}>
+        <div className="flex flex-col items-start w-full lg:w-2/3 max-w-4xl ">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-4xl"
+          >
+            Hi, I'm Teepakorn Sangiamsak
+          </motion.span>
+
+          <div
+            style={{ color: textColor }}
+            className="text-2xl sm:text-2xl md:text-3xl"
+          >
             <TypeAnimation
               sequence={[
                 "Web Developer",
@@ -50,7 +47,7 @@ const Hero = () => {
 
           <TypeAnimation
             sequence={["Welcome to", 1000, "Welcome to My Portfolio", 1000]}
-            style={{ fontSize: "3em" }}
+            className="text-2xl sm:text-3xl md:text-4xl mt-2"
             repeat={0}
             speed={10}
           />
