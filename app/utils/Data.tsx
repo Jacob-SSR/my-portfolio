@@ -1,4 +1,13 @@
+import type { JSX } from "react";
 import { Github } from "lucide-react";
+
+export interface TimelineItem {
+  date: string;
+  company_name: string;
+  title: string;
+  points: (string | JSX.Element)[];
+  icon?: string;
+}
 
 export const experiences = [
   {

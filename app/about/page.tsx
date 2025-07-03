@@ -23,15 +23,11 @@ const Aboutpage = () => {
       </section>
 
       <div className="p-5">
-        {/* container หลัก flex */}
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 ">
-          {/* Lanyard */}
           <div className="flex justify-center lg:justify-start lg:w-250">
-            {/* ปรับตำแหน่ง gravity/position ตามขนาด */}
             <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
           </div>
 
-          {/* ข้อความ */}
           <div className="flex flex-1 justify-center items-center text-center text-2xl  p-6 max-w-xl lg:mt-50 mx-auto lg:mx-0">
             <div className="flex flex-col space-y-6">
               <ScrollReveal

@@ -4,9 +4,9 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { education, experiences } from "../utils/Data";
+import { education, experiences, TimelineItem } from "../utils/Data";
 
-const ExCard = ({ item }) => (
+const ExCard = ({ item }: { item: TimelineItem }) => (
   <VerticalTimelineElement
     className="vertical-timeline-element--work transition-all duration-300 hover:scale-110"
     contentStyle={{
@@ -44,7 +44,7 @@ const ExCard = ({ item }) => (
   </VerticalTimelineElement>
 );
 
-const EdCard = ({ item }) => (
+const EdCard = ({ item }: { item: TimelineItem }) => (
   <VerticalTimelineElement
     className="vertical-timeline-element--work transition-all duration-300 hover:scale-110"
     contentStyle={{
@@ -101,7 +101,7 @@ const Timeline = () => {
         </p>
       </div>
       <VerticalTimeline>
-        {education.map((item, index) => (
+        {education.map((item: TimelineItem, index: number) => (
           <EdCard key={index} item={item} />
         ))}
       </VerticalTimeline>

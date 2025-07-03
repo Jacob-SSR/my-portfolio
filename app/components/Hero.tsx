@@ -7,10 +7,6 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { useState } from "react";
 
-const handleAnimationComplete = () => {
-  console.log("All letters have animated!");
-};
-
 const Hero = () => {
   const [textColor, setTextColor] = useState("#FFF4A4");
 
