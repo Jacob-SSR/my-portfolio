@@ -50,7 +50,7 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
       const charElements = el.querySelectorAll(".inline-block");
       if (charElements.length === 0) return;
 
-      const scrollTriggerConfig = {
+      const scrollTriggerConfig: ScrollTrigger.Vars = {
         trigger: el,
         start: scrollStart,
         end: scrollEnd,
