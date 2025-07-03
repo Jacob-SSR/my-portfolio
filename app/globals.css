@@ -120,3 +120,7 @@
     @apply bg-background bg-black text-foreground text-white;
   }
 }
+
+html{
+  scroll-behavior: smooth;
+}

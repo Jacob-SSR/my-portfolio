@@ -55,7 +55,7 @@ const TechStackPage = () => {
           key={i}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.05, type: "spring", stiffness: 150 }} // ให้ขึ้นเร็วขึ้น
+          transition={{ delay: i * 0.05, type: "spring", stiffness: 150 }}
           whileHover={{
             scale: 1.2,
             opacity: 1,
@@ -63,13 +63,13 @@ const TechStackPage = () => {
             boxShadow: `0 0 12px ${color}`,
             backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderRadius: "12px",
-            transition: { duration: 0.15 }, // hover ตอบสนองไวขึ้น
+            transition: { duration: 0.15 },
           }}
           className="cursor-pointer p-2 rounded-md"
           style={{
             color: color,
             opacity: 0.4,
-            transition: "all 0.15s ease-in-out", // ปกติเร็วขึ้นด้วย
+            transition: "all 0.15s ease-in-out",
           }}
         >
           <Icon size={48} />

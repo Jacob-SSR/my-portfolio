@@ -16,7 +16,10 @@ const Hero = () => {
 
   return (
     <div className="m-6 sm:m-10">
-      <section className="flex flex-col lg:flex-row items-center justify-center flex-wrap gap-10 p-6">
+      <section
+        id="home"
+        className="flex flex-col lg:flex-row items-center justify-center flex-wrap gap-10 p-6"
+      >
         {/* Text Section */}
         <div className="flex flex-col items-start w-full lg:w-2/3 max-w-4xl ">
           <motion.span

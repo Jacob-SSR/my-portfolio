@@ -143,7 +143,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       tlRef.current = tl;
 
       tl.to(elFront, {
-        y: "+=500",
+        x: "-=600",
         duration: config.durDrop,
         ease: config.ease,
       });
@@ -239,13 +239,19 @@ const CardSwap: React.FC<CardSwapProps> = ({
       ref={container}
       className={`
       absolute bottom-0 right-1/2 translate-x-1/2 translate-y-[10%]
-    origin-bottom transform perspective-[1000px] overflow-visible
+        origin-bottom transform perspective-[1000px] overflow-visible
 
-    md:scale-[0.9] md:translate-y-[20%]
-    sm:scale-[0.8] sm:translate-y-[25%]
-    max-[480px]:scale-[0.65] max-[480px]:translate-y-[30%]
+        max-[480px]:scale-[0.55] max-[480px]:translate-y-[35%] max-[480px]:right-1/2 max-[480px]:translate-x-1/2
 
-    lg:right-0 lg:translate-x-[50%]
+        sm:scale-[0.7] sm:translate-y-[30%] sm:right-1/2 sm:translate-x-1/2
+
+        md:scale-[0.85] md:translate-y-[25%] md:right-1/2 md:translate-x-1/2
+
+        lg:scale-[0.95] lg:translate-y-[15%] lg:right-0 lg:translate-x-[-50%]
+
+        xl:scale-[1.0] xl:translate-y-[10%] xl:right-0 xl:translate-x-[-50%]
+
+        2xl:scale-[1.1] 2xl:translate-y-[5%] 2xl:right-0 2xl:translate-x-[-50%]
     `}
       style={{ width, height }}
     >

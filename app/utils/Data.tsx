@@ -1,3 +1,5 @@
+import { Github } from "lucide-react";
+
 export const experiences = [
   {
     title: "IT Support ( Internship )",
@@ -56,5 +58,53 @@ export const education = [
     icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtj0xsGZ0NxpSENU0SYpynS8We5fSso8t78a8RRdXvdS358jOiiY0iF2OAoWHXJr0M_Os&usqp=CAU",
     date: "2012 - 2019",
     points: [],
+  },
+];
+
+export const projects = [
+  {
+    title: "SHOESHOE",
+    description:
+      "An e-commerce website for smart shoe shopping with modern UI and AI-powered personalized product recommendations.",
+    points: [
+      "Revolutionized online shoe shopping with an intuitive, user-friendly design.",
+      "Integrated AI-powered features for personalized shopping experiences.",
+      "Provided robust business management tools for efficient store management.",
+    ],
+    link: {
+      label: "GitHub",
+      href: "https://github.com/Jacob-SSR",
+      icon: <Github size={16} />,
+    },
+  },
+  {
+    title: "GREENCART",
+    description:
+      "An e-commerce website for fresh vegetable shopping with modern UI and convenient home delivery service.",
+    points: [
+      "Developed a full-featured e-commerce platform with product browsing, cart functionality, checkout, and order management.",
+      "Implemented secure authentication and authorization using JWT.",
+      "Integrated Stripe for secure and seamless online payments.",
+    ],
+    link: {
+      label: "Live Demo",
+      href: "https://greencart-wine.vercel.app/",
+    },
+  },
+  {
+    title: "JUMPKING 2D",
+    description: `A 2D platformer made with Unity and C#.
+Play as a fox on a vertical journey to find a legendary PC repair master in the sky.
+Features precise jumping, challenging level design, and pixel art style.`,
+    points: [
+      "Developed a 2D platformer adventure game using Unity and C#.",
+      "Designed and implemented precise jumping mechanics and platforming challenges.",
+      "Created a story-driven experience about a fox’s journey to find a legendary PC repair master.",
+    ],
+    link: {
+      label: "GitHub",
+      href: "https://github.com/Jacob-SSR/jumpking-unity",
+      icon: <Github size={16} />,
+    },
   },
 ];
