@@ -203,7 +203,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       const node = container.current!;
       const pause = () => {
         tlRef.current?.pause();
-        clearInterval(intervalRef.current);
+        clearInterval(intervalRef.current ?? undefined);
       };
       const resume = () => {
         tlRef.current?.play();
@@ -214,10 +214,10 @@ const CardSwap: React.FC<CardSwapProps> = ({
       return () => {
         node.removeEventListener("mouseenter", pause);
         node.removeEventListener("mouseleave", resume);
-        clearInterval(intervalRef.current);
+        clearInterval(intervalRef.current ?? undefined);
       };
     }
-    return () => clearInterval(intervalRef.current);
+    return () => clearInterval(intervalRef.current ?? undefined);
   }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
 
   const rendered = childArr.map((child, i) =>
