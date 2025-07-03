@@ -121,7 +121,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   );
 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<number | null>(null);
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
