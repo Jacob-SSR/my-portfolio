@@ -37,11 +37,13 @@ const ContactPage = () => {
     setSubmitStatus("");
 
     try {
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+      if (!accessKey) {
+        throw new Error("Missing Web3Forms access key");
+      }
+
       const formDataToSend = new FormData();
-      formDataToSend.append(
-        "access_key",
-        process.env.NEXT_PUBLIC_WEB3FORMS_KEY
-      );
+      formDataToSend.append("access_key", accessKey);
       formDataToSend.append("name", formData.name);
       formDataToSend.append("email", formData.email);
       formDataToSend.append("message", formData.message);
