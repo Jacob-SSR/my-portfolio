@@ -116,13 +116,17 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
   const { nodes, materials } = useGLTF(cardGLB) as any;
   const texture = useTexture(lanyard);
+
+  // เพิ่ม state สำหรับตรวจสอบว่า physics พร้อมแล้วหรือไม่
+  const [physicsReady, setPhysicsReady] = useState(false);
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
+        new THREE.Vector3(0, 0, 0), // กำหนดค่าเริ่มต้นที่ชัดเจน
+        new THREE.Vector3(0.5, 0, 0),
+        new THREE.Vector3(1, 0, 0),
+        new THREE.Vector3(1.5, 0, 0),
       ])
   );
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
@@ -161,6 +165,29 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     }
   }, [hovered, dragged]);
 
+  // ฟังก์ชันสำหรับตรวจสอบและทำความสะอาดค่า NaN
+  const safeVector3 = (source: any, fallback: THREE.Vector3): THREE.Vector3 => {
+    if (!source) return fallback;
+
+    const translation = source.translation();
+    if (!translation) return fallback;
+
+    const x =
+      isNaN(translation.x) || !isFinite(translation.x)
+        ? fallback.x
+        : translation.x;
+    const y =
+      isNaN(translation.y) || !isFinite(translation.y)
+        ? fallback.y
+        : translation.y;
+    const z =
+      isNaN(translation.z) || !isFinite(translation.z)
+        ? fallback.z
+        : translation.z;
+
+    return new THREE.Vector3(x, y, z);
+  };
+
   useFrame((state, delta) => {
     if (dragged && typeof dragged !== "boolean") {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
@@ -173,29 +200,90 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         z: vec.z - dragged.z,
       });
     }
-    if (fixed.current) {
+
+    // ตรวจสอบว่า RigidBody ทั้งหมดพร้อมแล้วหรือไม่
+    if (
+      fixed.current &&
+      j1.current &&
+      j2.current &&
+      j3.current &&
+      card.current
+    ) {
+      if (!physicsReady) {
+        setPhysicsReady(true);
+      }
+
       [j1, j2].forEach((ref) => {
-        if (!ref.current.lerped)
-          ref.current.lerped = new THREE.Vector3().copy(
-            ref.current.translation()
-          );
+        if (!ref.current.lerped) {
+          const initialTranslation = ref.current.translation();
+          ref.current.lerped = new THREE.Vector3().copy(initialTranslation);
+        }
+
+        const currentTranslation = ref.current.translation();
         const clampedDistance = Math.max(
           0.1,
-          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+          Math.min(1, ref.current.lerped.distanceTo(currentTranslation))
         );
         ref.current.lerped.lerp(
-          ref.current.translation(),
+          currentTranslation,
           delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
         );
       });
-      curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.lerped);
-      curve.points[2].copy(j1.current.lerped);
-      curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(32));
-      ang.copy(card.current.angvel());
-      rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+
+      // ใช้ safeVector3 เพื่อป้องกัน NaN
+      const p0 = safeVector3(j3.current, new THREE.Vector3(1.5, 0, 0));
+      const p1 =
+        j2.current.lerped ||
+        safeVector3(j2.current, new THREE.Vector3(1, 0, 0));
+      const p2 =
+        j1.current.lerped ||
+        safeVector3(j1.current, new THREE.Vector3(0.5, 0, 0));
+      const p3 = safeVector3(fixed.current, new THREE.Vector3(0, 0, 0));
+
+      // อัพเดท curve points
+      curve.points[0].copy(p0);
+      curve.points[1].copy(p1);
+      curve.points[2].copy(p2);
+      curve.points[3].copy(p3);
+
+      // อัพเดท MeshLine geometry เมื่อ physics พร้อมแล้ว
+      if (band.current && band.current.geometry) {
+        try {
+          const points = curve.getPoints(32);
+          // ตรวจสอบ points ก่อนส่งให้ setPoints
+          const validPoints = points.filter(
+            (point) =>
+              !isNaN(point.x) &&
+              !isNaN(point.y) &&
+              !isNaN(point.z) &&
+              isFinite(point.x) &&
+              isFinite(point.y) &&
+              isFinite(point.z)
+          );
+
+          if (validPoints.length > 0) {
+            band.current.geometry.setPoints(validPoints);
+          }
+        } catch (error) {
+          console.warn("Error updating MeshLine geometry:", error);
+        }
+      }
+
+      // อัพเดท card rotation
+      if (card.current) {
+        const cardAngvel = card.current.angvel();
+        const cardRotation = card.current.rotation();
+
+        if (cardAngvel && cardRotation) {
+          ang.copy(cardAngvel);
+          rot.copy(cardRotation);
+          card.current.setAngvel({
+            x: ang.x,
+            y: ang.y - rot.y * 0.25,
+            z: ang.z,
+          });
+        }
+      }
     }
   });
 
@@ -282,18 +370,21 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color="white"
-          depthTest={false}
-          resolution={isSmall ? [1000, 2000] : [1000, 1000]}
-          useMap
-          map={texture}
-          repeat={[-4, 1]}
-          lineWidth={1}
-        />
-      </mesh>
+      {/* แสดง MeshLine เมื่อ physics พร้อมแล้ว */}
+      {physicsReady && (
+        <mesh ref={band}>
+          <meshLineGeometry />
+          <meshLineMaterial
+            color="white"
+            depthTest={false}
+            resolution={isSmall ? [1000, 2000] : [1000, 1000]}
+            useMap
+            map={texture}
+            repeat={[-4, 1]}
+            lineWidth={1}
+          />
+        </mesh>
+      )}
     </>
   );
 }
