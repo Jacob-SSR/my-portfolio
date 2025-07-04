@@ -74,7 +74,7 @@ const Hero = () => {
       <div className="flex justify-center mt-6">
         <Button className="p-8 text-lg rounded-4xl">
           <a
-            href="/assets/Teepakorn Sangiamsak Resume.pdf"
+            href="/assets/Teepakorn Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2"
