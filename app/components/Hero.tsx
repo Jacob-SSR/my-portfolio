@@ -55,9 +55,9 @@ const Hero = () => {
         {/* Profile Image */}
         <div className="flex justify-center items-center ">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }} // เริ่มจางและเล็ก
-            animate={{ opacity: 1, scale: 1 }} // ค่อยๆ ชัดขึ้นและขยายเต็ม
-            transition={{ duration: 2.5, ease: "easeInOut" }} // เวลาและความนุ่ม
+            initial={{ opacity: 0, scale: 0.8 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 2.5, ease: "easeInOut" }} 
           >
             <Image
               src="/assets/CC19 (20).jpg"
