@@ -89,7 +89,7 @@ const ContactPage = () => {
             <ul className="flex gap-4 text-sm text-gray-300">
               <li>
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/Jacob-SSR"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -99,7 +99,7 @@ const ContactPage = () => {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com/in/yourusername"
+                  href="https://www.linkedin.com/in/teepakorn-sangiamsak-b83781362"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
